@@ -1,5 +1,6 @@
-import 'package:characters_info_app/character_view.dart';
 import 'package:flutter/material.dart';
+
+import 'view/characters_list/characters_list_view.dart';
 
 void main() {
   const app = CharactersInfoApplication();
