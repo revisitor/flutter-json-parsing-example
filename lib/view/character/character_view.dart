@@ -39,21 +39,25 @@ class _CharacterViewState extends State<CharacterView> {
   }
 
   Widget _getBody(AsyncSnapshot<Character> snapshot) {
-    if (!snapshot.hasData) {
-      return const LoadingView();
+    if (snapshot.hasData) {
+      Character character = snapshot.data!;
+      return Column(
+        children: [
+          Image.network(
+            character.imageUrl,
+            errorBuilder: (context, exception, stackTrace) {
+              return const Text('Could not load image');
+            },
+          ),
+          Text(character.name),
+        ],
+      );
     }
 
-    Character character = snapshot.data!;
-    return Column(
-      children: [
-        Image.network(
-          character.imageUrl,
-          errorBuilder: (context, exception, stackTrace) {
-            return const Text('Could not load image');
-          },
-        ),
-        Text(character.name),
-      ],
-    );
+    if (snapshot.hasError) {
+      return Center(child: Text(snapshot.error.toString()));
+    }
+
+    return const LoadingView();
   }
 }
